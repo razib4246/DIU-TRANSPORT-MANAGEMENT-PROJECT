@@ -890,4 +890,145 @@ void student_login()
         system("cls");
         print_heading("| SEARCH BUS |");
         char bus_name[50];
-  
+        printf("Enter the bus name: ");
+        scanf(" %[^\n]s",bus_name);
+        Bus *b=find_bus_by_name(bus_name);
+        if(b==NULL)
+        {
+            printf("No bus found with this name!!\n");
+            system("pause");
+            return student_login();
+        }
+        printf("Details info about this bus--\n\n");
+        printf("Bus Name: %s\nRoute: %s\nDeparture Time from DSC: %s\nDeparture Time from Route: %s\n",
+               b->bus_name, b->route_name, b->time_from_dsc, b->time_from_route);
+        system("pause");
+        return student_login();
+
+    }
+    break;
+    case 3:
+    {
+        system("cls");
+        print_heading("| SEARCH BUS |");
+        char route_name[50];
+        printf("Enter the route name: ");
+        scanf(" %[^\n]s",route_name);
+        Bus *b=find_bus_by_route(route_name);
+        if(b==NULL)
+        {
+            printf("There is no bus assigned for this route!!\n");
+            system("pause");
+            return student_login();
+        }
+        printf("Details info about this bus--\n\n");
+        printf("Bus Name: %s\nRoute: %s\nDeparture Time from DSC: %s\nDeparture Time from Route: %s\n",
+               b->bus_name, b->route_name, b->time_from_dsc, b->time_from_route);
+        system("pause");
+        return student_login();
+    }
+    break;
+    case 4:
+    {
+        system("cls");
+        print_heading("| BUS SHEDULE |");
+        Bus *p=bus_head;
+
+        if(p==NULL)
+        {
+            printf("No Bus found!!\n");
+            system("pause");
+            return student_login();
+        }
+        else
+        {
+            printf("Available Buses:\n\n");
+            int i=0;
+            while(p!=NULL)
+            {
+                printf("| Bus:%s | Route:%s | DSC Time:%s | Route Time:%s |\n",
+                       p->bus_name, p->route_name, p->time_from_dsc, p->time_from_route);
+                i++;
+                p=p->next;
+            }
+            system("pause");
+            return student_login();
+        }
+    }
+    break;
+    case 5:
+        system("cls");
+        print_heading("| NOTIFICATION |");
+        load_notice();
+        system("pause");
+        return student_login();
+    case 6:
+    {
+        system("cls");
+        main_menu();
+    }
+    break;
+    default:
+        system("cls");
+        printf("Invalid option!!\n\n");
+        return student_login();
+
+
+    }
+}
+void save_notice( char *date,char *main_body)
+{
+
+    FILE *fp=fopen("Notice.txt","w");
+    if(fp==NULL)
+    {
+        printf("Notice saving ERROR!!\n");
+        return;
+    }
+    else
+    {
+        fprintf(fp,"Date : %s \nNotice: %s\n",date,main_body);
+        fclose(fp);
+    }
+}
+void load_notice()
+{
+    FILE *fp=fopen("Notice.txt","r");
+    if(fp==NULL)
+    {
+        printf("No Notice available..!!\n");
+        return;
+    }
+    else
+    {
+        char line[600];
+
+
+        while(fgets(line,sizeof(line),fp)!=NULL)
+        {
+            printf("%s",line);
+
+        }
+        printf("\n");
+
+
+        fclose(fp);
+    }
+}
+void About()
+{
+    system("cls");
+    printf("Made by :\n");
+    printf("Md.Osman Gony\n");
+    printf("(ID: 251-15-736)\n");
+    printf("Pranto Kumar Biswas\n");
+    printf("(ID: 251-15-757)\n");
+    printf("Md Sabbir Hossen \n");
+    printf("(ID: 251-15-395)\n");
+    printf("Abu Obaidah Nokib\n");
+    printf("(ID: 251-15-045)\n");
+    printf("Razib Miah\n");
+    printf("(ID: 251-15-617)\n");
+    system("pause");
+    return main_menu();
+}
